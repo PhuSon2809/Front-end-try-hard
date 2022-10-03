@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Props</title>
+    <script crossorigin src="https://unpkg.com/react@18.0.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.0.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h1>Props</h1>
+    <!-- 
+        *Props
+
+        1. React element
+            - Sử dụng props giống như với attribute cua thẻ html
+            - 2 props class, for => className, htmlFor
+            - Phải tuần theo quy ước có sẵn
+        2. React components
+            - Sử dung props giống như đối số cho component
+            - Tự do đặt tên props
+                - Đặt theo camelCase
+                - Có thể bao gồm gạch ngang
+        3. Chú ý:
+            - Props "key" là props đặc biệt
+            -> Props ko truyền đc key trong mảng
+            - Props cơ bản là đối số của component
+              -> Props có thể là bất cứ kiểu dữ liệu gì
+            - Sử dụng destructuring       
+     -->
+
+    <!-- 
+        Làm việc với JSX
+
+        Phần I:
+        - Xử lý DOM event
+        - Component do chúng ta định nghĩa phải viết hóa Kí tự đầu
+        - Chọn component trong 1 object
+        - Booleans, null, undefined ko được render
+        - Kết hợp toán tử logic để render theo điều kiện
+
+        Phần II:
+        - Props trong JSX
+            - <YourComponent
+                propName1="String literals"
+                propName2={expression}
+                />
+            - Props default to "true"
+            - Spread/Rest props
+            - Children props
+                <YourComponent>String literals</YourComponent>
+                <YourComponent>{expression}</YourComponent>
+            - Render props
+      -->
+    <div id="root"></div>
+    <script type="text/babel">
+        function Button({ title, isPrimary }) {
+            return <button>{title}</button>
+        }
+
+        function Input({ label, ...inputProps }) {
+            return (
+                <div>
+                    <label>{label}</label>
+                    <input {...inputProps}/>
+                </div>
+            )
+        }
+
+        function App() {
+            const title = "Hello World";
+            return (
+                <div class="container">
+                    <Button isPrimary={true} title={title} />
+                    <Input
+                        label="Full name"
+                        type="text"
+                        placeholder="Enter name"
+                        titel="Đây là input"
+                        onFocus={() => { console.log(Math.random()) }}
+                    />
+                </div>
+            )
+        }
+
+        //index.js
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>

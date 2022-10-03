@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+    <script crossorigin src="https://unpkg.com/react@18.0.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.0.0/umd/react-dom.production.min.js"></script>
+</head>
+
+<body>
+    <h1>Add React to website</h1>
+
+    <!-- 
+        1. Github(nơi lưu trữ mã nguồn), 
+           NPMJS(lưu trữ sản phẩm đc lưu ở mã ngườn gốc), 
+           UNPKG
+        2. Add React to website
+        3. Official docs
+     -->
+
+    <!-- 
+        1. React.createElement() -> trả về React element (thành phần nhỏ nhất khi làm việc với React)
+        2. So sánh với document.createElement() -> DOM element (thành phần nhỏ nhất của DOM bà node)
+        3. Thay đổi: id, className, style, ...
+        4. Thêm text, HTML
+        5. Tạo:
+            <h1 title="Hello" class="heading">Hello guy!<h1>
+        6. Tạo:
+            <ul>
+                <li>JavaScript</li>
+                <li>ReactJS</li>
+            </ul>
+        7. Tạo:
+            <div class="post-item">
+                <h2 title="Học React tại F8">Học React JS</h2>
+                <p>Học React JS từ cơ bản đến nâng cao</p>
+            </div>
+      -->
+
+    <!-- 
+        1. Tại sao phải sử dụng React-DOM?
+        2. Tạo sao lại tách React-DOM ra?
+        3. Render-UI
+       -->
+
+    <div id="root"></div>
+
+    <script>
+        //DOM
+        const h1DOM = document.createElement("h1");
+
+        h1DOM.title = "Hello";
+        h1DOM.className = "heading";
+        h1DOM.innerText = "Hello guy!";
+
+        document.body.appendChild(h1DOM);
+
+        const ulDOM = document.createElement("ul");
+        ulDOM.id = "ul-id";
+
+        const liDOM1 = document.createElement("li");
+        liDOM1.innerText = "JavaScript";
+        const liDOM2 = document.createElement("li");
+        liDOM2.innerText = "ReactJS";
+
+        ulDOM.appendChild(liDOM1);
+        ulDOM.appendChild(liDOM2);
+
+        document.body.appendChild(ulDOM);
+
+        const divDOM = document.createElement("div");
+        divDOM.className = "post-item";
+
+        const h2DOM = document.createElement("h2");
+        h2DOM.title = "Học JavaScript tại F8";
+        h2DOM.innerText = "Học ReactJS";
+
+        const pDOM = document.createElement("p");
+        pDOM.innerText = "Học React JS từ cơ bản đến nâng cao";
+
+        divDOM.appendChild(h2DOM)
+        divDOM.appendChild(pDOM)
+
+        // document.body.appendChild(divDOM);
+
+        //React
+        //const h1React = document.createElement(title, props, children);
+        const h1React = React.createElement("h1", {
+            title: "Hello",
+            className: "heading",
+        }, "Hello guy!");
+
+        const ulReact = React.createElement("ul",
+            {
+                id: "ul-id",
+                style: "color: red; font-size: 12px; font-weight: bold",
+            },
+            React.createElement("li", null, "JavaScript"),
+            React.createElement("li", null, "React JS"),
+        );
+
+        const divReact = React.createElement(
+            "div",
+            {
+                className: "post-item",
+            },
+            React.createElement(
+                "h2",
+                {
+                    title: "Học JavaScript tại F8"
+                },
+                "Học ReactJS"
+            ),
+            React.createElement(
+                "p",
+                null,
+                "Học React JS từ cơ bản đến nâng cao"
+            ),
+        );
+
+        //Get root element
+        const container = document.getElementById("root");
+
+        //React-DOM -> render UI @17
+        // ReactDOM.render(divReact, root);
+        // ReactDOM.render(ulReact, root);
+        // ReactDOM.render(h1React, root);
+
+        //React-DOM -> render UI @18
+        const root = ReactDOM.createRoot(container);
+        root.render(divReact)
+
+    </script>
+
+</body>
+
+</html>

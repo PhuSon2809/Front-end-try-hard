@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Props</title>
+    <script crossorigin src="https://unpkg.com/react@18.0.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.0.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        .btn {
+            display: inline-block;
+            min-width: 32px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn+.btn {
+            margin-left: 8px;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #f05123;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Props</h1>
+    <!-- 
+        *Props
+
+        1. React element
+            - Sử dụng props giống như với attribute cua thẻ html
+            - 2 props class, for => className, htmlFor
+            - Phải tuần theo quy ước có sẵn
+        2. React components
+            - Sử dung props giống như đối số cho component
+            - Tự do đặt tên props
+                - Đặt theo camelCase
+                - Có thể bao gồm gạch ngang
+        3. Chú ý:
+            - Props "key" là props đặc biệt
+            -> Props ko truyền đc key trong mảng
+            - Props cơ bản là đối số của component
+              -> Props có thể là bất cứ kiểu dữ liệu gì
+            - Sử dụng destructuring       
+     -->
+
+    <!-- 
+        Làm việc với JSX
+
+        Phần I:
+        - Xử lý DOM event
+        - Component do chúng ta định nghĩa phải viết hóa Kí tự đầu
+        - Chọn component trong 1 object
+        - Booleans, null, undefined ko được render
+        - Kết hợp toán tử logic để render theo điều kiện
+
+        Phần II:
+        - Props trong JSX
+            - Props default to "true"
+            - Spread/Rest props
+            - Children props
+            - Render props
+      -->
+    <div id="root"></div>
+    <script type="text/babel">
+        const courses = [
+            {
+                "title": "Kiến Thức Nhập Môn IT",
+                "description": "Để có cái nhìn tổng quan về ngành IT - Lập trình web các bạn nên xem các videos tại khóa này trước nhé.",
+                "students_count": 81388,
+                "image_url": "https://files.fullstack.edu.vn/f8-prod/courses/7.png",
+            },
+            {
+                "title": "HTML CSS từ Zero đến Hero",
+                "description": "Trong khóa này chúng ta sẽ cùng nhau xây dựng giao diện 2 trang web là The Band & Shopee.",
+                "students_count": 125807,
+                "image_url": "https://files.fullstack.edu.vn/f8-prod/courses/2.png",
+            },
+            {
+                "title": "Responsive Với Grid System",
+                "description": "Trong khóa này chúng ta sẽ học về cách xây dựng giao diện web responsive với Grid System, tương tự Bootstrap 4.",
+                "students_count": 28731,
+                "image_url": "https://files.fullstack.edu.vn/f8-prod/courses/3.png",
+            }
+        ]
+
+        //Transformers -> nghiêm cứu khi làm các dự án to
+
+        function CoursesList({ course, handleClick }) {
+            return (
+                <div>
+                    <img src={course.image_url} />
+                    <h2 onClick={handleClick}>{course.title}</h2>
+                    <p>{course.description}</p>
+                    <div>{course.students_count}</div>
+                </div>
+            )
+        }
+
+        const Form = {
+            Input() {
+                return (<input />)
+            },
+            CheckBox() {
+                return (<input type="checkbox" />)
+            }
+        }
+
+        function Button({ title, onClick, href }) {
+            let Component = 'button';
+            const props = {};
+
+            if (href) {
+                Component = "a";
+                props.href = href;
+            }
+
+            if (onClick) {
+                props.onClick = onClick;
+            }
+
+            console.log(props);
+
+            return (
+                <Component className="btn btn-danger" {...props}>{title}</Component>
+            )
+        }
+
+        function App() {
+            const handleClick = (course) => {
+                alert(course.title)
+            }
+
+            const type = "Input";
+            const Component = Form[type];
+
+
+            return (
+
+                <div>
+                    <a onClick={() => {alert("Xin chào")}}>Xin chào</a>
+                    <br/>
+                    <Button
+                        
+                        title="Click me!"
+                        onClick={() => console.log(Math.random() * 100)}
+                        href="https://fullstack.edu.vn/"
+                    />
+
+                    {
+                        courses.map((course, index) => (
+                            <CoursesList course={course} key={index}
+                                handleClick={() => handleClick(course)} />
+                        ))
+                    }
+
+
+
+                    <Component />
+
+                </div>
+            )
+        }
+
+        //index.js
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>
